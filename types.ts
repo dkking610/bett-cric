@@ -100,3 +100,73 @@ export interface AIBettCoachResponse {
   rationale_short: string;
   confidence: 'low' | 'medium' | 'high';
 }
+
+// Odds Suggester Types
+export interface OddsSuggesterInputs {
+  homeTeam: string;
+  awayTeam: string;
+  competition: string;
+  venue: string;
+  homeForm: string;
+  awayForm: string;
+  h2h: string;
+  homeAdvantage: number;
+  keyInjuries: string;
+  pitchCharacter: 'batting-friendly' | 'bowling-friendly' | 'balanced';
+  weather: string;
+}
+
+// Fraud & Anomaly Triage Types
+export interface AIFraudCheckResponse {
+  risk_score: number;
+  rationale: string;
+  is_flagged: boolean;
+}
+
+// KYC Pre-check Types
+export interface AIKycResponse {
+  id_type: string;
+  extracted_name: string;
+  extracted_dob: string;
+  is_clear: boolean;
+  has_glare: boolean;
+  all_corners_visible: boolean;
+  quality_notes: string;
+}
+
+// Content Moderation Types
+export interface AIModerationResponse {
+    is_approved: boolean;
+    rejection_reason: string | null;
+    violation_category: string | null;
+}
+
+export interface ChatMessage {
+    id: string;
+    text: string;
+    sender: 'user' | 'bot';
+    timestamp: number;
+    status: 'pending' | 'approved' | 'rejected';
+    moderation_result?: AIModerationResponse;
+}
+
+// Settlement Explainer Types
+export interface SettlementExplainerInputs {
+  bet_id: string;
+  selection_details: string;
+  final_outcome: string;
+  settlement_status: 'Win' | 'Loss' | 'Void';
+  special_circumstances: string;
+}
+
+export interface AISettlementResponse {
+  human_explanation: string;
+  audit_json: {
+    bet_id: string;
+    settlement_status: string;
+    settlement_timestamp: string;
+    reason_code: string;
+    explanation: string;
+    settled_by: 'AI_ASSISTANT';
+  };
+}
