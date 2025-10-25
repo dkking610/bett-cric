@@ -1,8 +1,11 @@
 
-import React from 'react';
-import { Sport, Event, Selection, Runner, Market as MarketType } from '../types';
+
+import React, { useState } from 'react';
+import { Sport, Event, Selection, Market as MarketType } from '../types';
 import OddsButton from './OddsButton';
 import AIPromoCard from './AIPromoCard';
+import AIOddsModal from './AIOddsModal';
+import { SparklesIcon } from './icons';
 
 interface EventsViewProps {
   sport: Sport;
@@ -41,6 +44,8 @@ const Market: React.FC<{ market: MarketType, event: Event, selections: Selection
 
 
 const EventsView: React.FC<EventsViewProps> = ({ sport, events, selections, onToggleSelection }) => {
+  const [selectedEventForAI, setSelectedEventForAI] = useState<Event | null>(null);
+
   return (
     <div>
       <h2 className="text-3xl font-bold mb-4 text-white">{sport.name}</h2>
@@ -55,7 +60,17 @@ const EventsView: React.FC<EventsViewProps> = ({ sport, events, selections, onTo
                 <h3 className="text-xl font-semibold text-white">{event.teamA} vs {event.teamB}</h3>
                 <p className="text-sm text-gray-400">{event.time}</p>
               </div>
-              {event.isLive && <span className="text-xs font-bold text-red-500 bg-red-500/20 px-2 py-1 rounded">LIVE</span>}
+               <div className="flex items-center space-x-2">
+                {event.isLive && <span className="text-xs font-bold text-red-500 bg-red-500/20 px-2 py-1 rounded">LIVE</span>}
+                 <button 
+                    onClick={() => setSelectedEventForAI(event)} 
+                    className="p-1.5 rounded-full text-gray-400 hover:bg-gray-600 hover:text-brand-secondary transition-colors"
+                    aria-label="Get AI Odds Analysis"
+                    title="Get AI Odds Analysis"
+                  >
+                    <SparklesIcon className="w-5 h-5" />
+                 </button>
+              </div>
             </div>
             <div className="p-4 space-y-4">
               {event.markets.map(market => (
@@ -72,6 +87,8 @@ const EventsView: React.FC<EventsViewProps> = ({ sport, events, selections, onTo
         ))}
          {events.length === 0 && <p className="text-gray-500 text-center py-8">No events available for this sport.</p>}
       </div>
+
+      <AIOddsModal event={selectedEventForAI} onClose={() => setSelectedEventForAI(null)} />
     </div>
   );
 };
