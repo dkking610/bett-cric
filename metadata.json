@@ -1,0 +1,5 @@
+{
+  "name": "AI Cricket Sportsbook",
+  "description": "A production-grade, low-latency online cricket betting platform with Google AI Studio integrations for personalized promotions and odds assistance.",
+  "requestFramePermissions": []
+}
