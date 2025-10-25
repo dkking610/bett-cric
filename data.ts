@@ -1,6 +1,6 @@
 
 
-import { Sport, Event } from './types';
+import { Sport, Event, UserProfile, Account } from './types';
 
 export const MOCK_SPORTS: Sport[] = [
   { id: 'cricket', name: 'Cricket' },
@@ -15,6 +15,34 @@ export const MOCK_EVENTS: Record<string, Event[]> = {
       teamB: 'Australia',
       time: 'Today, 18:30',
       isLive: true,
+      score: '158/2',
+      overs: '18.2',
+      liveUpdates: [
+        {
+          raw_event_text: "SIX! Virat Kohli smashes it over long-on. Incredible shot under pressure. The crowd is electric!",
+          inning: "1st",
+          over: "18.2",
+          score: "158/2",
+          wickets: 2,
+          current_run_rate: 8.6,
+        },
+        {
+          raw_event_text: "WICKET! Starc bowls a perfect yorker, Rohit Sharma is bowled out. A huge blow for India.",
+          inning: "1st",
+          over: "17.5",
+          score: "150/2",
+          wickets: 2,
+          current_run_rate: 8.5,
+        },
+        {
+          raw_event_text: "FOUR! Rohit Sharma finds the gap through covers. Exquisite timing.",
+          inning: "1st",
+          over: "17.3",
+          score: "149/1",
+          wickets: 1,
+          current_run_rate: 8.6,
+        }
+      ],
       competition: 'T20 World Cup',
       venue: 'Kensington Oval, Barbados',
       form: 'W,W,W,L,W',
@@ -75,4 +103,15 @@ export const MOCK_EVENTS: Record<string, Event[]> = {
       ],
     },
   ],
+};
+
+export const MOCK_USER_PROFILE: UserProfile = {
+  user_id: 'user-123',
+  risk_profile: 'low',
+  preferred_language: 'th',
+};
+
+export const MOCK_ACCOUNT: Account = {
+  balance: 1250.50,
+  currency: 'USD',
 };

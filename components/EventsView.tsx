@@ -6,6 +6,7 @@ import OddsButton from './OddsButton';
 import AIPromoCard from './AIPromoCard';
 import AIOddsModal from './AIOddsModal';
 import { SparklesIcon } from './icons';
+import LiveUpdateCard from './LiveUpdateCard';
 
 interface EventsViewProps {
   sport: Sport;
@@ -60,11 +61,17 @@ const EventsView: React.FC<EventsViewProps> = ({ sport, events, selections, onTo
                 <h3 className="text-xl font-semibold text-white">{event.teamA} vs {event.teamB}</h3>
                 <p className="text-sm text-gray-400">{event.time}</p>
               </div>
-               <div className="flex items-center space-x-2">
-                {event.isLive && <span className="text-xs font-bold text-red-500 bg-red-500/20 px-2 py-1 rounded">LIVE</span>}
+               <div className="flex items-center space-x-4">
+                {event.isLive && event.score && event.overs && (
+                  <div className="text-right">
+                    <span className="text-xs font-bold text-red-500 bg-red-500/20 px-2 py-1 rounded mb-1 inline-block">LIVE</span>
+                    <p className="font-bold text-lg text-white leading-tight">{event.score}</p>
+                    <p className="text-xs text-gray-400 leading-tight">Overs: {event.overs}</p>
+                  </div>
+                )}
                  <button 
                     onClick={() => setSelectedEventForAI(event)} 
-                    className="p-1.5 rounded-full text-gray-400 hover:bg-gray-600 hover:text-brand-secondary transition-colors"
+                    className="p-1.5 rounded-full text-gray-400 hover:bg-gray-600 hover:text-brand-secondary transition-colors self-center"
                     aria-label="Get AI Odds Analysis"
                     title="Get AI Odds Analysis"
                   >
@@ -82,6 +89,16 @@ const EventsView: React.FC<EventsViewProps> = ({ sport, events, selections, onTo
                   onToggleSelection={onToggleSelection} 
                 />
               ))}
+              {event.isLive && event.liveUpdates && event.liveUpdates.length > 0 && (
+                <div>
+                  <h4 className="font-bold text-gray-300 mb-2 mt-4 text-base">Live Commentary</h4>
+                  <div className="space-y-2">
+                    {event.liveUpdates.map((update, index) => (
+                      <LiveUpdateCard key={index} update={update} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}

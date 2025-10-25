@@ -1,7 +1,8 @@
 
+
 import React, { useState } from 'react';
-import { Sport, Event, Selection } from './types';
-import { MOCK_SPORTS, MOCK_EVENTS } from './data';
+import { Sport, Event, Selection, UserProfile, Account } from './types';
+import { MOCK_SPORTS, MOCK_EVENTS, MOCK_USER_PROFILE, MOCK_ACCOUNT } from './data';
 import EventsView from './components/EventsView';
 import Betslip from './components/Betslip';
 import { UserIcon } from './components/icons';
@@ -11,6 +12,9 @@ const App: React.FC = () => {
   const [selectedSport] = useState<Sport>(MOCK_SPORTS[0]);
   const [events] = useState<Event[]>(MOCK_EVENTS[selectedSport.id] || []);
   const [selections, setSelections] = useState<Selection[]>([]);
+  const [userProfile] = useState<UserProfile>(MOCK_USER_PROFILE);
+  const [account] = useState<Account>(MOCK_ACCOUNT);
+
 
   const handleToggleSelection = (selection: Selection) => {
     setSelections(prev => {
@@ -45,7 +49,7 @@ const App: React.FC = () => {
           <div className="flex items-center space-x-4">
             <div className="text-right">
               <div className="text-sm text-gray-500">Balance</div>
-              <div className="font-bold text-white">$1,250.50</div>
+              <div className="font-bold text-white">${account.balance.toFixed(2)}</div>
             </div>
             <button className="p-2 rounded-full bg-gray-700 hover:bg-gray-600">
               <UserIcon className="w-6 h-6 text-gray-300" />
@@ -70,6 +74,8 @@ const App: React.FC = () => {
             selections={selections}
             onRemoveSelection={handleRemoveSelection}
             onClear={handleClearBetslip}
+            userProfile={userProfile}
+            account={account}
           />
         </aside>
       </div>

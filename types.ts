@@ -16,6 +16,17 @@ export interface Market {
   runners: Runner[];
 }
 
+export interface LiveUpdate {
+  raw_event_text: string;
+  inning: string;
+  over: string;
+  score: string;
+  wickets: number;
+  current_run_rate: number;
+  micro_summary?: string;
+  notification?: string;
+}
+
 export interface Event {
   id: string;
   sportId: string;
@@ -32,6 +43,10 @@ export interface Event {
   keyInjuries: string[];
   pitchCharacter: 'batting-friendly' | 'bowling-friendly' | 'balanced';
   weather: string;
+  // Fields for live commentary
+  score?: string; // e.g., "120/3"
+  overs?: string; // e.g., "15.4"
+  liveUpdates?: LiveUpdate[];
 }
 
 export interface Selection {
@@ -62,4 +77,26 @@ export interface AIOdds {
   book_margin_percent: number;
   rationale_short: string;
   notes: string | null;
+}
+
+// BettCoach Types
+export interface UserProfile {
+  user_id: string;
+  risk_profile: 'low' | 'medium' | 'high';
+  preferred_language: 'en' | 'th';
+}
+
+export interface Account {
+  balance: number;
+  currency: string;
+}
+
+export interface AIBettCoachResponse {
+  reply: string;
+  recommended_stake: {
+    percent: number;
+    currency: string;
+  };
+  rationale_short: string;
+  confidence: 'low' | 'medium' | 'high';
 }

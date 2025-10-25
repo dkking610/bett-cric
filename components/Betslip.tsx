@@ -1,15 +1,19 @@
 
+
 import React, { useState, useMemo } from 'react';
-import { Selection } from '../types';
+import { Selection, UserProfile, Account } from '../types';
 import { TrashIcon } from './icons';
+import AIBettCoach from './AIBettCoach';
 
 interface BetslipProps {
   selections: Selection[];
   onRemoveSelection: (marketId: string, runnerName: string) => void;
   onClear: () => void;
+  userProfile: UserProfile;
+  account: Account;
 }
 
-const Betslip: React.FC<BetslipProps> = ({ selections, onRemoveSelection, onClear }) => {
+const Betslip: React.FC<BetslipProps> = ({ selections, onRemoveSelection, onClear, userProfile, account }) => {
   const [stake, setStake] = useState<string>('');
   
   const totalOdds = useMemo(() => {
@@ -75,7 +79,8 @@ const Betslip: React.FC<BetslipProps> = ({ selections, onRemoveSelection, onClea
       {selections.length > 0 && (
         <div className="p-4 border-t border-gray-700 bg-gray-900/50 md:rounded-b-lg">
           <div className="space-y-4">
-             <div className="flex justify-between items-center text-sm">
+            <AIBettCoach selections={selections} userProfile={userProfile} account={account} />
+            <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-400">{betType}</span>
                 <span className="font-bold text-white">{totalOdds.toFixed(2)}</span>
             </div>
